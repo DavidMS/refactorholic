@@ -1,13 +1,18 @@
 const { When, Then } = require('cucumber');
 const chai = require('chai');
-const { expectNoGraphqlErrors } = require("./utils");
+const { expectNoGraphqlErrors, apiQuery } = require("./utils");
 
 const expect = chai.expect;
 
 When('the user queries:', function(query) {
-    return chai.request('http://localhost:5001')
-        .post('/blog-test-16eff/us-central1/api')
-        .send({ query })
+    return apiQuery(query)
+        .then(res => {
+            this.res = res;
+        });
+});
+
+When('the user queries {string}', function(query) {
+    return apiQuery(query)
         .then(res => {
             this.res = res;
         });
