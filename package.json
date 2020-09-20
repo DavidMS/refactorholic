@@ -1,0 +1,6 @@
+{
+  "name": "refactorholic",
+  "scripts": {
+    "start": "firebase emulators:start --only hosting,functions"
+  }
+}
