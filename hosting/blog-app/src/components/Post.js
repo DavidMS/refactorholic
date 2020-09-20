@@ -1,5 +1,5 @@
 import React from 'react';
 
 export default function Post({text}) {
-    return (<p>{text}</p>);
+    return (<p role="text">{text}</p>);
 }
