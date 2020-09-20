@@ -8,19 +8,19 @@ describe('Post', () => {
         const expectedText = 'expected text';
 
         // When
-        const { findByRole } = render(<Post text={expectedText} />);
+        const { findByTestId } = render(<Post text={expectedText} />);
 
         // Then
-        const textElement = await findByRole('text');
+        const textElement = await findByTestId('text');
         expect(textElement).toHaveTextContent(expectedText);
     });
 
     it('renders null as empty', async () => {
         // When
-        const { findByRole } = render(<Post />);
+        const { findByTestId } = render(<Post />);
 
         // Then
-        const textElement = await findByRole('text');
+        const textElement = await findByTestId('text');
         expect(textElement).toBeEmpty();
     });
 });
