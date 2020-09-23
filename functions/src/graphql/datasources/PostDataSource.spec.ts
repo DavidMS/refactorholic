@@ -34,9 +34,15 @@ describe('PostDataSource', () => {
 
     it('should reject then the repository rejects', async () => {
         // Given
-        repositoryStub.findPostBySlug.rejects;
+        const expectedError = new Error('the error message');
+        repositoryStub.findPostBySlug.rejects(expectedError);
 
         // Then
-        expect(await postDataSource.findBySlug('a slug')).to.throw;
+        try {
+            await postDataSource.findBySlug('a slug');
+            expect.fail('should have rejected');
+        } catch (e) {
+            expect(e).to.be.equals(expectedError);
+        }
     });
 });
