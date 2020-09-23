@@ -15,7 +15,7 @@ function CustomWorld({attach, parameters}) {
         .setChromeOptions(options)
         .build();
 
-    setDefaultTimeout(5000);
+    setDefaultTimeout(10000);
 }
 
 setWorldConstructor(CustomWorld);
