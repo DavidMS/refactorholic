@@ -1,4 +1,4 @@
-import IllegalStateError from "../error/IllegalStateError";
+import IllegalArgumentError from "../error/IllegalArgumentError";
 import {validateNotEmpty} from "../utils/validationUtils";
 
 export default class PostEntity {
@@ -10,13 +10,13 @@ export default class PostEntity {
     this.slug = slug;
   }
 
-  public set slug(slug: string) {
-    validateNotEmpty(slug, () => new IllegalStateError('A post slug cannot be empty'));
+  set slug(slug: string) {
+    validateNotEmpty(slug, () => new IllegalArgumentError('A post slug cannot be empty'));
 
     this._slug = slug;
   }
 
-  public get slug(): string {
+  get slug(): string {
     return this._slug;
   }
 }

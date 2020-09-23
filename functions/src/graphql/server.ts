@@ -1,5 +1,6 @@
 import express from 'express';
 import {ApolloServer} from 'apollo-server-express';
+import firestore from '../config/firestore'
 
 import schema from './schema';
 import resolvers from './resolver';
@@ -16,7 +17,7 @@ function gqlServer() {
     introspection: true,
     playground: true,
     dataSources: () => ({
-      posts: new PostDataSource(new PostRepository()) // TODO: Get a dependency injection lib.
+      posts: new PostDataSource(new PostRepository(firestore)) // TODO: Get a dependency injection lib.
     })
   });
 

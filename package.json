@@ -1,6 +1,14 @@
 {
   "name": "refactorholic",
   "scripts": {
-    "start": "firebase emulators:start --only hosting,functions"
+    "start": "firebase emulators:start --only hosting,functions,firestore",
+    "functional-tests": "firebase emulators:exec --only functions,firestore,hosting \"cucumber-js\""
+  },
+  "devDependencies": {
+    "@firebase/testing": "^0.20.11",
+    "chai": "^4.2.0",
+    "cucumber": "^6.0.5",
+    "chromedriver": "^85.0.1",
+    "selenium-webdriver": "^4.0.0-alpha.7"
   }
 }

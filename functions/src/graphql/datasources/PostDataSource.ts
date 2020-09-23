@@ -8,7 +8,7 @@ export default class PostDataSource extends DataSource {
     super();
   }
 
-  public async findBySlug(slug: string): Promise<PostView | undefined> {
+  public async findBySlug(slug: string): Promise<PostView | null> {
     return this.repository.findPostBySlug(slug);
   }
 }
