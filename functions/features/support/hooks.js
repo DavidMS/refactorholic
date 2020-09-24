@@ -1,6 +1,6 @@
 const {Before, BeforeAll, AfterAll} = require('cucumber');
 const firebase = require('@firebase/testing');
-const {init} = require('../helpers/firebase');
+const {initFirebase, endFirebase} = require('../helpers/firebase');
 
 async function clearDb () {
     await firebase.clearFirestoreData({
@@ -9,11 +9,11 @@ async function clearDb () {
 }
 
 BeforeAll(async () => {
-    await init();
+    await initFirebase();
 });
 
-AfterAll(() => {
-    return Promise.all(firebase.apps().map(app => app.delete()));
+AfterAll(function() {
+    return endFirebase();
 })
 
 Before(async () => {

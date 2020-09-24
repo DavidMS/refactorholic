@@ -1,5 +1,5 @@
 const {Given} = require('cucumber');
-const {persist} = require('../helpers/firebase');
+const {persist} = require('../../functions/features/helpers/firebase');
 
 const givenThePost = async function (postString) {
     await persist('posts', {
