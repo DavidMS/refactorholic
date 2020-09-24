@@ -1,1 +1,0 @@
-{"ast":null,"code":"const next = require('next');\n\nconst app = next({\n  dev: false\n});\nconst handle = app.getRequestHandler();\n\nmodule.exports.handler = (req, res) => {\n  return app.prepare().then(() => handle(req, res)).catch(ex => {\n    console.error(ex.stack);\n    process.exit(1);\n  });\n};","map":null,"metadata":{},"sourceType":"script"}
