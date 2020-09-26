@@ -8,23 +8,28 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [10.x]
-
     steps:
-      - uses: actions/checkout@v2
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Use Node.js 10.x
         uses: actions/setup-node@v1
         with:
-          node-version: ${{ matrix.node-version }}
-      - run: |
-          cd functions
-          npm ci
-          npm run test
-          npm run build
-          npm run functional-tests
-      - run: npm ci
+          node-version: 10.x
+
+      - name: Functions - Install
+        working-directory: functions
+        run: npm ci
+
+      - name: Functions - Test
+        working-directory: functions
+        run: npm run test
+
+      - name: Functions - Build
+        working-directory: functions
+        run: npm run build
+
+      - name: Functions - Functional tests
+        working-directory: functions
+        run: npm run functional-tests
