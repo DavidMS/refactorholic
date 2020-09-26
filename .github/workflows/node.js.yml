@@ -72,12 +72,12 @@ jobs:
           node-version: 10.x
 
       - name: Functions - Install
-          working-directory: functions
-          run: npm ci
+        working-directory: functions
+        run: npm ci
 
       - name: Functions - Build
-          working-directory: functions
-          run: npm run build
+        working-directory: functions
+        run: npm run build
 
       - name: Hosting - Blog App - Install
         working-directory: hosting/blog-app
