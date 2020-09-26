@@ -10,7 +10,8 @@ jobs:
   build-functions:
     name: Build Functions
     defaults:
-      working-directory: functions
+      run:
+        working-directory: functions
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -36,7 +37,8 @@ jobs:
   build-blog-app:
     name: Build Hosting - Blog App
     defaults:
-      working-directory: hosting/blog-app
+      run:
+        working-directory: hosting/blog-app
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
