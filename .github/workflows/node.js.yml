@@ -57,3 +57,40 @@ jobs:
 
       - name: Build
         run: npm run build
+
+  functional-tests:
+    name: End-to-end functional tests
+    needs: [build-functions, build-blog-app]
+    runs-on: ubuntu-latest
+      steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Use Node.js 10.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 10.x
+
+      - name: Functions - Install
+          working-directory: functions
+          run: npm ci
+
+      - name: Functions - Build
+          working-directory: functions
+          run: npm run build
+
+      - name: Hosting - Blog App - Install
+        working-directory: hosting/blog-app
+        run: npm ci
+
+      - name: Hosting - Blog App - Build
+        working-directory: hosting/blog-app
+        run: npm run build
+
+      - name: Functional tests - Install
+        working-directory: hosting/blog-app
+        run: npm ci
+
+      - name: Functional tests - Run
+        working-directory: hosting/blog-app
+        run: npm run functional-tests
