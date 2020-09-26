@@ -11,7 +11,7 @@ async function clearDb() {
     });
 }
 
-setDefaultTimeout(10000);
+setDefaultTimeout(20000);
 let initialized = false;
 async function waitForAppInitialization() {
     if (!initialized) {
