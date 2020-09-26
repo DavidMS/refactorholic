@@ -5,6 +5,7 @@ const chrome = require('selenium-webdriver/chrome');
 exports.createDriver = function () {
     const options = new chrome.Options();
     options.addArguments('window-size=1440,900');
+    options.addArguments('--headless');
 
     return new seleniumWebdriver.Builder()
         .withCapabilities(seleniumWebdriver.Capabilities.chrome())

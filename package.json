@@ -2,7 +2,7 @@
   "name": "refactorholic",
   "scripts": {
     "start": "firebase emulators:start --only hosting,functions,firestore",
-    "functional-tests": "firebase emulators:exec --only functions,firestore,hosting \"cucumber-js\""
+    "functional-tests": "node ./functions/node_modules/firebase-tools/lib/bin/firebase.js emulators:exec --only functions,firestore,hosting \"cucumber-js\""
   },
   "devDependencies": {
     "@firebase/testing": "^0.20.11",
