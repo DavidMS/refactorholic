@@ -9,7 +9,7 @@
     "deploy": "firebase deploy --only functions",
     "logs": "firebase functions:log",
     "test": "mocha -r ts-node/register '**/*.spec.ts'",
-    "functional-tests": "npm run build && firebase emulators:exec --only functions,firestore \"cucumber-js\"",
+    "functional-tests": "firebase emulators:exec --only functions,firestore \"cucumber-js\"",
     "functional-test-feature": "npm run build && firebase emulators:exec --only functions,firestore \"cucumber-js features/get_single_post.feature\"",
     "functional-test-scenario": "npm run build && firebase emulators:exec --only functions,firestore \"cucumber-js features/get_single_post.feature:4\""
   },
