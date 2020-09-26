@@ -2,7 +2,7 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ '**' ]
+    branches: [ '*' ]
   pull_request:
     branches: [ tomasbozzo/ch46/integrate-with-github-actions ]
 
@@ -60,7 +60,7 @@ jobs:
 
   functional-tests:
     name: End-to-end functional tests
-    if: (github.event_name == 'pull_request' && github.base_ref == 'tomasbozzo/ch46/integrate-with-github-actions') || (github.ref == 'tomasbozzo/ch46/integrate-with-github-actions')
+    if: (github.event_name == 'pull_request' && github.base_ref == 'tomasbozzo/ch46/integrate-with-github-actions') || (github.ref == 'refs/heads/tomasbozzo/ch46/integrate-with-github-actions')
     needs: [build-functions, build-blog-app]
     runs-on: ubuntu-latest
     steps:
@@ -96,7 +96,7 @@ jobs:
 
   deploy:
     name: Deploy to Firebase
-    if: github.event_name == 'push' && github.ref == 'tomasbozzo/ch46/integrate-with-github-actions'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/tomasbozzo/ch46/integrate-with-github-actions'
     needs: [build-functions, build-blog-app, functional-tests]
     runs-on: ubuntu-latest
     steps:
