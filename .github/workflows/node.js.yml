@@ -2,9 +2,9 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ tomasbozzo/ch46/integrate-with-github-actions ]
+    branches: [ '**' ]
   pull_request:
-    branches: [ master ]
+    branches: [ tomasbozzo/ch46/integrate-with-github-actions ]
 
 jobs:
   build-functions:
@@ -60,6 +60,7 @@ jobs:
 
   functional-tests:
     name: End-to-end functional tests
+    if: github.event_name == 'pull_request' && github.base_ref == 'tomasbozzo/ch46/integrate-with-github-actions' || github.event == 'push' && github.ref == 'tomasbozzo/ch46/integrate-with-github-actions'
     needs: [build-functions, build-blog-app]
     runs-on: ubuntu-latest
     steps:
@@ -92,3 +93,12 @@ jobs:
 
       - name: Functional tests - Run
         run: npm run functional-tests
+
+  deploy:
+    name: Deploy to Firebase
+    if: github.event == 'push' && github.ref == 'tomasbozzo/ch46/integrate-with-github-actions'
+    needs: [ build-functions, build-blog-app, functional-tests ]
+      runs-on: ubuntu-latest
+    steps:
+    - name: Do nothing (yet)
+        run: echo 'do nothing'
