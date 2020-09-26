@@ -9,7 +9,6 @@ on:
 jobs:
   build-functions:
     name: Build Functions
-    if: false
     defaults:
       run:
         working-directory: functions
@@ -37,7 +36,6 @@ jobs:
 
   build-blog-app:
     name: Build Hosting - Blog App
-    if: false
     defaults:
       run:
         working-directory: hosting/blog-app
