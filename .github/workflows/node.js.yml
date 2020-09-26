@@ -9,6 +9,7 @@ on:
 jobs:
   build-functions:
     name: Build Functions
+    if: false
     defaults:
       run:
         working-directory: functions
@@ -36,6 +37,7 @@ jobs:
 
   build-blog-app:
     name: Build Hosting - Blog App
+    if: false
     defaults:
       run:
         working-directory: hosting/blog-app
@@ -60,7 +62,7 @@ jobs:
 
   functional-tests:
     name: End-to-end functional tests
-    needs: [build-functions, build-blog-app]
+#    needs: [build-functions, build-blog-app]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -88,9 +90,7 @@ jobs:
         run: npm run build
 
       - name: Functional tests - Install
-        working-directory: hosting/blog-app
         run: npm ci
 
       - name: Functional tests - Run
-        working-directory: hosting/blog-app
         run: npm run functional-tests
