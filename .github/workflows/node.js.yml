@@ -25,7 +25,7 @@ jobs:
       - name: Cache node modules
         uses: actions/cache@v2
         env:
-          cache-name: cache-node-modules
+          cache-name: functions-node-modules-cache
         with:
           # npm cache files are stored in `~/.npm` on Linux/macOS
           path: ~/.npm
@@ -36,7 +36,7 @@ jobs:
             ${{ runner.os }}-
 
       - name: Install
-        run: npm ci
+        run: npm install
 
       - name: Test
         run: npm run test
@@ -65,7 +65,7 @@ jobs:
       - name: Cache node modules
         uses: actions/cache@v2
         env:
-          cache-name: cache-node-modules
+          cache-name: hosting-blog-app-node-modules-cache
         with:
           # npm cache files are stored in `~/.npm` on Linux/macOS
           path: ~/.npm
@@ -76,7 +76,7 @@ jobs:
             ${{ runner.os }}-
 
       - name: Install
-        run: npm ci
+        run: npm install
 
       - name: Test
         run: npm run test:ci
