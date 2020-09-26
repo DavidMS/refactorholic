@@ -7,7 +7,10 @@ on:
     branches: [ master ]
 
 jobs:
-  build:
+  build-functions:
+    name: Build Functions
+    defaults:
+      working-directory: functions
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -18,18 +21,37 @@ jobs:
         with:
           node-version: 10.x
 
-      - name: Functions - Install
-        working-directory: functions
+      - name: Install
         run: npm ci
 
-      - name: Functions - Test
-        working-directory: functions
+      - name: Test
         run: npm run test
 
-      - name: Functions - Build
-        working-directory: functions
+      - name: Build
         run: npm run build
 
-      - name: Functions - Functional tests
-        working-directory: functions
+      - name: Functional tests
         run: npm run functional-tests
+
+  build-blog-app:
+    name: Build Hosting - Blog App
+    defaults:
+      working-directory: hosting/blog-app
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Use Node.js 10.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 10.x
+
+      - name: Install
+        run: npm ci
+
+      - name: Test
+        run: npm run test:ci
+
+      - name: Build
+        run: npm run build
