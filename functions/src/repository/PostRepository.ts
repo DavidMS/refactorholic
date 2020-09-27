@@ -20,8 +20,9 @@ export default class PostRepository {
       if (snapshot.empty) {
         return null;
       } else {
-        const {slugResult, text} = snapshot.docs[0].data()
-        return new PostEntity(slugResult, text);
+        // tslint:disable-next-line: no-shadowed-variable
+        const {slug, text} = snapshot.docs[0].data()
+        return new PostEntity(slug, text);
       }
     } catch (e) {
       throw e;
