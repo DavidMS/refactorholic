@@ -1,5 +1,14 @@
 {
   "projects": {
     "default": "blog-test-16eff"
+  },
+  "targets": {
+    "blog-test-16eff": {
+      "hosting": {
+        "prod": [
+          "blog-test-16eff"
+        ]
+      }
+    }
   }
 }

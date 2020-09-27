@@ -20,8 +20,8 @@ export default class PostRepository {
       if (snapshot.empty) {
         return null;
       } else {
-        const {slug, text} = snapshot.docs[0].data()
-        return new PostEntity(slug, text);
+        const {slugResult, text} = snapshot.docs[0].data()
+        return new PostEntity(slugResult, text);
       }
     } catch (e) {
       throw e;
