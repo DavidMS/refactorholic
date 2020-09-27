@@ -11,7 +11,7 @@ async function clearDb() {
     });
 }
 
-setDefaultTimeout(10000);
+setDefaultTimeout(20000);
 let initialized = false;
 async function waitForAppInitialization() {
     if (!initialized) {
@@ -21,7 +21,7 @@ async function waitForAppInitialization() {
         await driver.quit();
         initialized = true;
 
-        setDefaultTimeout(3000);
+        setDefaultTimeout(4000);
     }
 }
 

@@ -1,0 +1,104 @@
+name: Node.js CI
+
+on:
+  push:
+    branches: [ '**' ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build-functions:
+    name: Build Functions
+    defaults:
+      run:
+        working-directory: functions
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Use Node.js 10.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 10.x
+
+      - name: Install
+        run: npm install
+
+      - name: Test
+        run: npm run test
+
+      - name: Build
+        run: npm run build
+
+      - name: Functional tests
+        run: npm run functional-tests
+
+  build-blog-app:
+    name: Build Hosting - Blog App
+    defaults:
+      run:
+        working-directory: hosting/blog-app
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Use Node.js 10.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 10.x
+
+      - name: Install
+        run: npm ci
+
+      - name: Test
+        run: npm run test:ci
+
+      - name: Build
+        run: npm run build
+
+  functional-tests:
+    name: End-to-end functional tests
+    if: (github.event_name == 'pull_request' && github.base_ref == 'master') || (github.event_name == 'push' && github.ref == 'refs/heads/master')
+    needs: [build-functions, build-blog-app]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Use Node.js 10.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 10.x
+
+      - name: Functions - Install
+        working-directory: functions
+        run: npm ci
+
+      - name: Functions - Build
+        working-directory: functions
+        run: npm run build
+
+      - name: Hosting - Blog App - Install
+        working-directory: hosting/blog-app
+        run: npm ci
+
+      - name: Hosting - Blog App - Build
+        working-directory: hosting/blog-app
+        run: npm run build
+
+      - name: Functional tests - Install
+        run: npm ci
+
+      - name: Functional tests - Run
+        run: npm run functional-tests
+
+  deploy:
+    name: Deploy to Firebase
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    needs: [build-functions, build-blog-app, functional-tests]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Do nothing (yet)
+        run: echo 'still do nothing'
