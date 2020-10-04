@@ -7,12 +7,6 @@ Feature: Get a single post
     Then a null 'post' is returned
 
   Scenario: Return the post if it exists
-    Given the post
-    """
-    {
-      "slug": "first-post",
-      "text": "Hello, this is the first post"
-    }
-    """
+    Given the post '{"slug": "first-post", "text": "Hello, this is the first post"}'
     When the user queries 'post(slug:"first-post") { text }'
     Then the following 'post' is returned: '{ "text": "Hello, this is the first post" }'

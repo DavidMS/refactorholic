@@ -21,7 +21,7 @@ async function waitForAppInitialization() {
         await driver.quit();
         initialized = true;
 
-        setDefaultTimeout(4000);
+        setDefaultTimeout(5000);
     }
 }
 

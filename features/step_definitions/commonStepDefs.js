@@ -10,12 +10,4 @@ Then('the text {string} is rendered', async function (text) {
     const xpath = `//*[contains(text(),"${text}")]`;
     const el = await this.driver.wait(until.elementLocated(By.xpath(xpath)));
     await this.driver.wait(until.elementIsVisible(el));
-
-    /*return this.driver.takeScreenshot().then(
-        function(image, err) {
-            require('fs').writeFile('out.png', image, 'base64', function(err) {
-                console.log(err);
-            });
-        }
-    );*/
 });
