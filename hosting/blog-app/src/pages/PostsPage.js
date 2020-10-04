@@ -16,22 +16,21 @@ export function Posts({children}) {
 export default function PostsPage() {
     const { loading, error, data } = useQuery(GET_POSTS);
 
-    let posts = [];
-    if (!loading && ! error) {
-        posts = data.posts;
-
-        if (posts.length === 0) {
-            return (
-                <Posts>
-                    <p>No post was found</p>
-                </Posts>
-            );
-        }
+    if (error || loading) {
+        return <Posts />
     }
 
-    return (
-        <Posts>
-            {posts.map(post => <ListedPost key={post.title} title={post.title} />)}
-        </Posts>
-    );
+    if (data.posts.length === 0) {
+        return (
+            <Posts>
+                <p>No post was found</p>
+            </Posts>
+        );
+    } else {
+        return (
+            <Posts>
+                {data.posts.map(post => <ListedPost key={post.title} title={post.title} />)}
+            </Posts>
+        );
+    }
 }

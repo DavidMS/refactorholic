@@ -24,6 +24,6 @@ describe('ListedPost', () => {
 
         // Then
         const titleNode = container.firstChild.firstChild;
-        expect(titleNode.textContent).toBeEmpty();
+        expect(titleNode.textContent).toBe('');
     });
 });

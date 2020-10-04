@@ -3,7 +3,7 @@ const {By, until} = require('selenium-webdriver');
 
 When('the user navigates to {string}', async function (url) {
     await this.driver.get(`http://localhost:5000${url}`);
-    await this.driver.wait(until.elementIsVisible(this.driver.findElement(By.id('application'))));
+    await this.driver.wait(until.elementLocated(By.id('application')));
 });
 
 Then('the text {string} is rendered', async function (text) {
