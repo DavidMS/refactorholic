@@ -2,7 +2,7 @@ import express from 'express';
 import {ApolloServer} from 'apollo-server-express';
 import firestore from '../config/firestore'
 
-import schema from '.';
+import schema from './schema';
 import resolvers from './resolver';
 import PostDataSource from "./datasources/PostDataSource";
 import PostRepositoryImpl from "../repository/PostRepositoryImpl";
