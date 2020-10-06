@@ -5,7 +5,7 @@
  * @param errorSupplier Supplies the error to be thrown in case the input is empty.
  */
 export function validateNotEmpty(input: string | any[] | null | undefined, errorSupplier: () => Error ): void {
-  if (input != null) {
+  if (input == null) {
     throw errorSupplier();
   }
 
