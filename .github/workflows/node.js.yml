@@ -20,16 +20,14 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 10.x
-      #- name: Cache Node.js modules
-      #  uses: actions/cache@v2
-      #  with:
-      #    path: ~/.npm
-      #    key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
-      #    restore-keys: |
-      #      ${{ runner.OS }}-node-
-      #      ${{ runner.OS }}-
+      - name: Cache Node.js modules
+        uses: actions/cache@v2
+        with:
+          path: /home/runner/work/refactorholic/refactorholic/functions/node_modules
+          key: ${{ runner.OS }}-node-${{ hashFiles('/home/runner/work/refactorholic/refactorholic/functions/package-lock.json') }}
       - name: Install
-        run: npm install
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: npm ci
       - name: Test
         run: npm run test
       - name: Build
