@@ -20,14 +20,14 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 10.x
-      - name: Cache Node.js modules
-        uses: actions/cache@v2
-        with:
-          path: ~/.npm
-          key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.OS }}-node-
-            ${{ runner.OS }}-
+      #- name: Cache Node.js modules
+      #  uses: actions/cache@v2
+      #  with:
+      #    path: ~/.npm
+      #    key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
+      #    restore-keys: |
+      #      ${{ runner.OS }}-node-
+      #      ${{ runner.OS }}-
       - name: Install
         run: npm install
       - name: Test
@@ -49,14 +49,14 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 10.x
-      - name: Cache Node.js modules
-        uses: actions/cache@v2
-        with:
-          path: ~/.npm
-          key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.OS }}-node-
-            ${{ runner.OS }}-
+      #- name: Cache Node.js modules
+      #  uses: actions/cache@v2
+      #  with:
+      #    path: ~/.npm
+      #    key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
+      #    restore-keys: |
+      #      ${{ runner.OS }}-node-
+      #      ${{ runner.OS }}-
       - name: Install
         run: npm ci
       - name: Test
@@ -75,14 +75,14 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 10.x
-      - name: Cache Node.js modules
-        uses: actions/cache@v2
-        with:
-          path: ~/.npm
-          key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.OS }}-node-
-            ${{ runner.OS }}-
+      #- name: Cache Node.js modules
+      #  uses: actions/cache@v2
+      #  with:
+      #    path: ~/.npm
+      #    key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
+      #    restore-keys: |
+      #      ${{ runner.OS }}-node-
+      #      ${{ runner.OS }}-
       - name: Functions - Install
         working-directory: functions
         run: npm ci
@@ -111,14 +111,14 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 10.x
-      - name: Cache Node.js modules
-        uses: actions/cache@v2
-        with:
-          path: ~/.npm
-          key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.OS }}-node-
-            ${{ runner.OS }}-
+      #- name: Cache Node.js modules
+      #  uses: actions/cache@v2
+      #  with:
+      #    path: ~/.npm
+      #    key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
+      #    restore-keys: |
+      #      ${{ runner.OS }}-node-
+      #      ${{ runner.OS }}-
       - name: Functions - Install
         working-directory: functions
         run: npm ci
