@@ -16,21 +16,24 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-
       - name: Use Node.js 10.x
         uses: actions/setup-node@v1
         with:
           node-version: 10.x
-
+      - name: Cache Node.js modules
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.OS }}-node-
+            ${{ runner.OS }}-
       - name: Install
         run: npm install
-
       - name: Test
         run: npm run test
-
       - name: Build
         run: npm run build
-
       - name: Functional tests
         run: npm run functional-tests
 
@@ -43,21 +46,24 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-
       - name: Use Node.js 10.x
         uses: actions/setup-node@v1
         with:
           node-version: 10.x
-
+      - name: Cache Node.js modules
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.OS }}-node-
+            ${{ runner.OS }}-
       - name: Install
         run: npm ci
-
       - name: Test
         run: npm run test:ci
-
       - name: Build
         run: npm run build
-
   functional-tests:
     name: End-to-end functional tests
     if: (github.event_name == 'pull_request' && github.base_ref == 'master') || (github.event_name == 'push' && github.ref == 'refs/heads/master')
@@ -66,31 +72,32 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-
       - name: Use Node.js 10.x
         uses: actions/setup-node@v1
         with:
           node-version: 10.x
-
+      - name: Cache Node.js modules
+        uses: actions/cache@v2
+        with:
+        path: ~/.npm
+        key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.OS }}-node-
+            ${{ runner.OS }}-
       - name: Functions - Install
         working-directory: functions
         run: npm ci
-
       - name: Functions - Build
         working-directory: functions
         run: npm run build
-
       - name: Hosting - Blog App - Install
         working-directory: hosting/blog-app
         run: npm ci
-
       - name: Hosting - Blog App - Build
         working-directory: hosting/blog-app
         run: npm run build
-
       - name: Functional tests - Install
         run: npm ci
-
       - name: Functional tests - Run
         run: npm run functional-tests
 
@@ -101,27 +108,29 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-
       - name: Use Node.js 10.x
         uses: actions/setup-node@v1
         with:
           node-version: 10.x
-  
+      - name: Cache Node.js modules
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.OS }}-node-
+            ${{ runner.OS }}-
       - name: Functions - Install
         working-directory: functions
         run: npm ci
-  
       - name: Functions - Build
         working-directory: functions
         run: npm run build
-  
       - name: Hosting - Blog App - Install
         working-directory: hosting/blog-app
         run: npm ci
-  
       - name: Hosting - Blog App - Build
         working-directory: hosting/blog-app
         run: npm run build
-
       - name: Deploy to prod site
         run: firebase deploy --non-interactive --token ${{ secrets.FIREBASE_TOKEN }} -m "RunID ${{ github.run_id }} Commit SHA ${{ github.sha }}"
