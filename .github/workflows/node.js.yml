@@ -36,7 +36,6 @@ jobs:
         run: npm run build
       - name: Functional tests
         run: npm run functional-tests
-
   build-blog-app:
     name: Build Hosting - Blog App
     defaults:
