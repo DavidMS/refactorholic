@@ -21,13 +21,13 @@ jobs:
         with:
           node-version: 10.x
       - name: Cache Node.js modules
-        id: cache
+        id: functions-cache
         uses: actions/cache@v2
         with:
           path: /home/runner/work/refactorholic/refactorholic/functions/node_modules
           key: ${{ runner.OS }}-node-${{ hashFiles('/home/runner/work/refactorholic/refactorholic/functions/package-lock.json') }}
       - name: Install
-        if: steps.cache.outputs.cache-hit != 'true'
+        if: steps.functions-cache.outputs.cache-hit != 'true'
         run: npm ci
       - name: Test
         run: npm run test
@@ -48,15 +48,14 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 10.x
-      #- name: Cache Node.js modules
-      #  uses: actions/cache@v2
-      #  with:
-      #    path: ~/.npm
-      #    key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
-      #    restore-keys: |
-      #      ${{ runner.OS }}-node-
-      #      ${{ runner.OS }}-
+      - name: Cache Node.js modules
+        id: app-cache
+        uses: actions/cache@v2
+        with:
+          path: /home/runner/work/refactorholic/refactorholic/hosting/blog-app/node_modules
+          key: ${{ runner.OS }}-node-${{ hashFiles('/home/runner/work/refactorholic/refactorholic/hosting/blog-app/package-lock.json') }}
       - name: Install
+        if: steps.app-cache.outputs.cache-hit != 'true'
         run: npm ci
       - name: Test
         run: npm run test:ci
@@ -75,21 +74,21 @@ jobs:
         with:
           node-version: 10.x
       #- name: Cache Node.js modules
+      #  id: cache
       #  uses: actions/cache@v2
       #  with:
       #    path: ~/.npm
       #    key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
-      #    restore-keys: |
-      #      ${{ runner.OS }}-node-
-      #      ${{ runner.OS }}-
       - name: Functions - Install
         working-directory: functions
+        if: steps.functions-cache.outputs.cache-hit != 'true'
         run: npm ci
       - name: Functions - Build
         working-directory: functions
         run: npm run build
       - name: Hosting - Blog App - Install
         working-directory: hosting/blog-app
+        if: steps.app-cache.outputs.cache-hit != 'true'
         run: npm ci
       - name: Hosting - Blog App - Build
         working-directory: hosting/blog-app
