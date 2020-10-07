@@ -16,24 +16,25 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-
       - name: Use Node.js 10.x
         uses: actions/setup-node@v1
         with:
           node-version: 10.x
-
+      - name: Cache Node.js modules
+        id: functions-cache
+        uses: actions/cache@v2
+        with:
+          path: /home/runner/work/refactorholic/refactorholic/functions/node_modules
+          key: ${{ runner.OS }}-node-${{ hashFiles('/home/runner/work/refactorholic/refactorholic/functions/package-lock.json') }}
       - name: Install
-        run: npm install
-
+        if: steps.functions-cache.outputs.cache-hit != 'true'
+        run: npm ci
       - name: Test
         run: npm run test
-
       - name: Build
         run: npm run build
-
       - name: Functional tests
         run: npm run functional-tests
-
   build-blog-app:
     name: Build Hosting - Blog App
     defaults:
@@ -43,21 +44,23 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-
       - name: Use Node.js 10.x
         uses: actions/setup-node@v1
         with:
           node-version: 10.x
-
+      - name: Cache Node.js modules
+        id: app-cache
+        uses: actions/cache@v2
+        with:
+          path: /home/runner/work/refactorholic/refactorholic/hosting/blog-app/node_modules
+          key: ${{ runner.OS }}-node-${{ hashFiles('/home/runner/work/refactorholic/refactorholic/hosting/blog-app/package-lock.json') }}
       - name: Install
+        if: steps.app-cache.outputs.cache-hit != 'true'
         run: npm ci
-
       - name: Test
         run: npm run test:ci
-
       - name: Build
         run: npm run build
-
   functional-tests:
     name: End-to-end functional tests
     if: (github.event_name == 'pull_request' && github.base_ref == 'master') || (github.event_name == 'push' && github.ref == 'refs/heads/master')
@@ -66,31 +69,32 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-
       - name: Use Node.js 10.x
         uses: actions/setup-node@v1
         with:
           node-version: 10.x
-
+      - name: Cache Node.js modules
+        id: functions-cache
+        uses: actions/cache@v2
+        with:
+          path: /home/runner/work/refactorholic/refactorholic/functions/node_modules
+          key: ${{ runner.OS }}-node-${{ hashFiles('/home/runner/work/refactorholic/refactorholic/functions/node_modules/package-lock.json') }}
       - name: Functions - Install
         working-directory: functions
+        if: steps.functions-cache.outputs.cache-hit != 'true'
         run: npm ci
-
       - name: Functions - Build
         working-directory: functions
         run: npm run build
-
       - name: Hosting - Blog App - Install
         working-directory: hosting/blog-app
+        if: steps.app-cache.outputs.cache-hit != 'true'
         run: npm ci
-
       - name: Hosting - Blog App - Build
         working-directory: hosting/blog-app
         run: npm run build
-
       - name: Functional tests - Install
         run: npm ci
-
       - name: Functional tests - Run
         run: npm run functional-tests
 
@@ -100,5 +104,30 @@ jobs:
     needs: [build-functions, build-blog-app, functional-tests]
     runs-on: ubuntu-latest
     steps:
-      - name: Do nothing (yet)
-        run: echo 'still do nothing'
+      - uses: actions/checkout@v2
+      - name: Use Node.js 10.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 10.x
+      #- name: Cache Node.js modules
+      #  uses: actions/cache@v2
+      #  with:
+      #    path: ~/.npm
+      #    key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
+      #    restore-keys: |
+      #      ${{ runner.OS }}-node-
+      #      ${{ runner.OS }}-
+      - name: Functions - Install
+        working-directory: functions
+        run: npm ci
+      - name: Functions - Build
+        working-directory: functions
+        run: npm run build
+      - name: Hosting - Blog App - Install
+        working-directory: hosting/blog-app
+        run: npm ci
+      - name: Hosting - Blog App - Build
+        working-directory: hosting/blog-app
+        run: npm run build
+      - name: Deploy to prod site
+        run: firebase deploy --non-interactive --token ${{ secrets.FIREBASE_TOKEN }} -m "RunID ${{ github.run_id }} Commit SHA ${{ github.sha }}"
