@@ -13,6 +13,9 @@ const resolverFunctions = {
   Query: {
     post(_: unknown, post: GetPostContract, {dataSources: {posts}}: Config): Promise<PostView | null> {
       return posts.findBySlug(post.slug);
+    },
+    posts(_: unknown, args: undefined, {dataSources: {posts}}: Config): Promise<PostView[]> {
+      return posts.findAllPublished();
     }
   }
 }

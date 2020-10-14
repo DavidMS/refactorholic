@@ -20,3 +20,7 @@ exports.initFirebase = async function () {
 exports.endFirebase = function () {
     return Promise.all(firebase.apps().map(app => app.delete()));
 }
+
+exports.toTimestamp = function(timestamp) {
+    return firestore.Timestamp.fromMillis(timestamp);
+}

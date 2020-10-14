@@ -5,7 +5,7 @@ import firestore from '../config/firestore'
 import schema from './schema';
 import resolvers from './resolver';
 import PostDataSource from "./datasources/PostDataSource";
-import PostRepository from "../repository/PostRepository";
+import PostRepositoryImpl from "../repository/PostRepositoryImpl";
 
 function gqlServer() {
   const app = express();
@@ -17,7 +17,7 @@ function gqlServer() {
     introspection: true,
     playground: true,
     dataSources: () => ({
-      posts: new PostDataSource(new PostRepository(firestore)) // TODO: Get a dependency injection lib.
+      posts: new PostDataSource(new PostRepositoryImpl(firestore)) // TODO: Get a dependency injection lib.
     })
   });
 

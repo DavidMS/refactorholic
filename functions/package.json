@@ -3,15 +3,15 @@
   "scripts": {
     "lint": "tslint --project tsconfig.json",
     "build": "tsc",
-    "serve": "npm run build && firebase emulators:start --only functions",
+    "serve": "npm run build && firebase emulators:start --only functions,firestore",
     "shell": "npm run build && firebase functions:shell",
     "start": "npm run shell",
     "deploy": "firebase deploy --only functions",
     "logs": "firebase functions:log",
     "test": "mocha -r ts-node/register 'src/**/*.spec.ts'",
     "functional-tests": "node ./node_modules/firebase-tools/lib/bin/firebase.js emulators:exec --only functions,firestore \"cucumber-js\"",
-    "functional-test-feature": "npm run build && firebase emulators:exec --only functions,firestore \"cucumber-js features/get_single_post.feature\"",
-    "functional-test-scenario": "npm run build && firebase emulators:exec --only functions,firestore \"cucumber-js features/get_single_post.feature:4\""
+    "functional-test-feature": "node ./node_modules/firebase-tools/lib/bin/firebase.js emulators:exec --only functions,firestore \"cucumber-js features/get_posts.feature\"",
+    "functional-test-scenario": "node ./node_modules/firebase-tools/lib/bin/firebase.js emulators:exec --only functions,firestore \"cucumber-js features/get_posts.feature:4\""
   },
   "engines": {
     "node": "10"

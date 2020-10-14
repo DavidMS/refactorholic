@@ -4,6 +4,7 @@ export default gql`
 type Post {
   slug: String
   text: String
+  title: String
 }
 
 # the schema allows the following query:
