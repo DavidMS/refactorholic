@@ -97,7 +97,7 @@ jobs:
   deploy:
     name: Deploy to Firebase
     if: github.event_name == 'push' && github.ref == 'refs/heads/master'
-    needs: [build-functions, build-blog-app, functional-tests]
+    needs: [build-api, build-blog-app, functional-tests]
     runs-on: ubuntu-latest
     steps:
       - name: Do nothing (yet)
