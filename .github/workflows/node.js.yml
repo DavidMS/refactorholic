@@ -7,11 +7,11 @@ on:
     branches: [ master ]
 
 jobs:
-  build-functions:
-    name: Build Functions
+  build-api:
+    name: Build API
     defaults:
       run:
-        working-directory: functions
+        working-directory: api
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -61,7 +61,7 @@ jobs:
   functional-tests:
     name: End-to-end functional tests
     if: (github.event_name == 'pull_request' && github.base_ref == 'master') || (github.event_name == 'push' && github.ref == 'refs/heads/master')
-    needs: [build-functions, build-blog-app]
+    needs: [build-api, build-blog-app]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -72,12 +72,12 @@ jobs:
         with:
           node-version: 10.x
 
-      - name: Functions - Install
-        working-directory: functions
+      - name: API - Install
+        working-directory: api
         run: npm ci
 
-      - name: Functions - Build
-        working-directory: functions
+      - name: API - Build
+        working-directory: api
         run: npm run build
 
       - name: Hosting - Blog App - Install

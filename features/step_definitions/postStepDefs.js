@@ -1,5 +1,5 @@
 const {By, until} = require("selenium-webdriver");
-const {addPost} = require("../../functions/features/helpers/post");
+const {addPost} = require("../../api/features/helpers/post");
 const {Given, Then} = require('cucumber');
 
 const givenThePost = async function (postString) {

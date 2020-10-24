@@ -1,7 +1,7 @@
 const {Before, BeforeAll, After, AfterAll} = require('cucumber');
 const firebase = require('@firebase/testing');
 const {createDriver} = require("../helpers/selenium");
-const {initFirebase, endFirebase} = require('../../functions/features/helpers/firebase');
+const {initFirebase, endFirebase} = require('../../api/features/helpers/firebase');
 const {setDefaultTimeout} = require('cucumber');
 const {By, until} = require('selenium-webdriver')
 
