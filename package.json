@@ -2,8 +2,8 @@
   "name": "refactorholic",
   "scripts": {
     "start": "firebase emulators:start --only hosting,functions,firestore",
-    "functional-tests": "node ./functions/node_modules/firebase-tools/lib/bin/firebase.js emulators:exec --only functions,firestore,hosting \"cucumber-js\"",
-    "functional-tests-scenario": "node ./functions/node_modules/firebase-tools/lib/bin/firebase.js emulators:exec --only functions,firestore,hosting \"cucumber-js features/render_posts.feature:13\""
+    "functional-tests": "node ./api/node_modules/firebase-tools/lib/bin/firebase.js emulators:exec --only functions,firestore,hosting \"cucumber-js\"",
+    "functional-tests-scenario": "node ./api/node_modules/firebase-tools/lib/bin/firebase.js emulators:exec --only functions,firestore,hosting \"cucumber-js features/render_posts.feature:13\""
   },
   "devDependencies": {
     "@firebase/testing": "^0.20.11",
